@@ -107,7 +107,7 @@ The upstream compass implementation replaced our earlier marker-removal-order fi
 | 0.4 | Merged upstream v1.3.2 while keeping unlimited downed time and HOME rescue; adapted notifications and reconciled overlapping fixes. |
 | 0.5 | Verified revive medkit debit, explicit rejection receipts/refunds, duplicate protection and competing-rescuer handling; Windows installer/source release. |
 
-Earlier detailed documents ([0.1](PATCH_NOTES.md), [0.2](ISSUE_FIXES_0.2.md), [0.3](GUEST_TRADING_0.3.md), [0.4](MERGE_0.4.md), [0.5](NEXT_REVIVE.md)) describe their original checkpoints. Their historical “source only,” “not yet built,” or missing-refund statements are superseded by this cumulative entry and the 0.5 validation record.
+The original checkpoint notes for versions 0.1–0.5 are available in [repository history](https://github.com/dreadnaughtgaming/NOLA-Stalker2-Coop/tree/ffcd0fa3491943b7a70cdb2da9464ae53f7fa15b). Use this changelog and the Windows validation record for the status of the published build.
 
 ## Original upstream release history
 
