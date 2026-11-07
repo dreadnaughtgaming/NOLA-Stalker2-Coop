@@ -1,182 +1,30 @@
 <a id="nola-overview"></a>
 
-# Unofficial NOLA stability 0.5
+# NOLA Co-op · Stability 0.5
 
-This is a modified build based on [NOLA v1.3.2 by Joaovitor404silva (Jaumn)](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop). Original authorship, credits and GPL-3.0 licensing are retained. This build is not an official upstream release.
+Play S.T.A.L.K.E.R. 2: Heart of Chornobyl with up to five players over Steam Friends or Direct IP. This unofficial fork is based on [NOLA v1.3.2 by Jaumn](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop).
 
-See [stability changelog](#nola-changelog) and [Windows validation](validation/WINDOWS_0.5.log). All players should use the same package. Windows compilation and automated tests passed; live multiplayer validation is still required. Money transfer is not included.
+**[Download the Windows installer](https://github.com/dreadnaughtgaming/NOLA-Stalker2-Coop/releases/download/v1.3.2-stability.0.5/NOLA-stability-0.5-v1.3.2-Installer.zip)** · [Release notes and source](https://github.com/dreadnaughtgaming/NOLA-Stalker2-Coop/releases/tag/v1.3.2-stability.0.5)
 
-The original project overview follows. Its download and support links point to the original author.
+## Quick install
 
+1. Close the game and extract the entire ZIP.
+2. Run `install.bat` and choose **Steam Friends** or **Direct IP**. Everyone should install the same version.
+3. Start the game. The host selects **Host co-op** and loads a save or starts a game. The others select **Join co-op**.
 
-## Documentation index
+Built for the Steam version on Windows, game Update 2.1 (Steam build `26123434`). Stability 0.5 is an experimental prerelease. The installer was tested on Windows, and live multiplayer testing is pending.
 
-[Pull request checklist](#nola-pr-template)
+## More information
 
-- [Installation](#nola-install)
-- [FAQ](#nola-faq)
-- [Features](#nola-features)
-- [Settings and flags](#nola-flags)
-- [Known issues](#nola-known-issues)
-- [Changelog](#nola-changelog)
-- [Roadmap](#nola-roadmap)
-- [Contributing](#nola-contributing)
-- [Development](#nola-developing)
-- [Credits](#nola-credits)
-- [D1 data reference](#nola-data-readme-d1)
-- [Release process](#nola-docs-release)
-- [Steam design](#nola-docs-steam-design)
-- [A2 slide design](#nola-tests-a2-slide-design)
-- [A3 weapon design](#nola-tests-a3-weapon-design)
-- [L1 RESUME](#nola-tests-l1-resume)
-- [L1 cover evidence](#nola-tests-l1-cover-evidence)
-- [NPCSYNC PLAN](#nola-tests-npcsync-plan)
-- [Test suite](#nola-tests-readme)
-- [Live tests: bodies](#nola-tests-bodies-live-todo)
-- [Live tests: damage](#nola-tests-damage-live-todo)
-- [Live tests: items](#nola-tests-items-live-todo)
-- [Live tests: lock](#nola-tests-lock-live-todo)
-- [Live tests: m11](#nola-tests-m11-live-todo)
-- [Live tests: m5](#nola-tests-m5-live-todo)
-- [Live tests: net](#nola-tests-net-live-todo)
-- [Live tests: pop](#nola-tests-pop-live-todo)
-- [Live tests: quest](#nola-tests-quest-live-todo)
-- [Live tests: save](#nola-tests-save-live-todo)
-- [Live tests: steam](#nola-tests-steam-live-todo)
-- [Live tests: travel](#nola-tests-travel-live-todo)
-- [Version 1.2.0 screenshots](#nola-v1-2-0-readme)
-
----
-
-<p align="center"><img src="assets/nola_title.png" alt="NOLA - No One Left Alone" width="720"></p>
-
-<p align="center"><b>Co-op for S.T.A.L.K.E.R. 2: Heart of Chornobyl. Walk the Zone with friends, in the same world, each with your own character.</b></p>
-
-<p align="center">
-<a href="https://www.nexusmods.com/stalker2heartofchornobyl/mods/3050">Nexus Mods</a> ·
-<a href="https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/releases/latest">Download</a> ·
-<a href="#nola-changelog">Changelog</a> ·
-<a href="https://ko-fi.com/jaumn">Support on Ko-fi</a>
-</p>
-
-<p align="center"><a href="https://ko-fi.com/jaumn"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support NOLA on Ko-fi"></a></p>
-
-> Status: **v1.3.2** (see the [Changelog](#nola-changelog)). It works and has been played a lot in testing, but it is not finished and it will have bugs. Please read [Known issues](#nola-known-issues) before you start.
-
----
-
-## What NOLA is
-
-NOLA is a fan-made co-op mod for S.T.A.L.K.E.R. 2: Heart of Chornobyl. One player hosts and runs the Zone. Up to five players (the host plus four friends) share that world: you see each other, fight the same enemies, loot the same bodies, follow the same story, and pick each other up when you go down.
-
-The host's world is the real one: the host decides what the A-Life, the NPCs, the weather and the quests do. Everyone else joins that world and keeps their own character (gear, condition, attachments and health). If you do not press the co-op buttons, the game plays like normal solo STALKER 2.
-
-NOLA is free and open source under the [GPL-3.0 licence](LICENSE).
-
-## At a glance
-
-- Up to **5 players**: the host plus four friends.
-- Connect through **Steam friends** or **LAN / IP** (VPN works too).
-- One shared Zone: same NPCs, enemies, loot and story, run by the host.
-- Every player keeps their **own character**.
-- Downed and revive, friendly fire, and everyone loads together with the host.
-- Solo play is unchanged when you don't press the co-op buttons.
-
-## Play
-
-Download the latest release from [Nexus Mods](https://www.nexusmods.com/stalker2heartofchornobyl/mods/3050) or [GitHub Releases](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/releases/latest), then follow [Install and play](#nola-install).
-
-| Page | What is in it |
-|---|---|
-| [Features](#nola-features) | Every feature, grouped by area, with how well it is tested |
-| [Known issues](#nola-known-issues) | What is broken or not checked yet |
-| [Changelog](#nola-changelog) | What changed in each version |
-| [Roadmap](#nola-roadmap) | What is released, what is next, what is planned for V2, and ideas |
-| [Install and play](#nola-install) | Requirements and a quick start |
-| [Settings](#nola-flags) | What each setting does and how to turn features off |
-| [FAQ](#nola-faq) | Common questions |
-| [Credits](#nola-credits) | Credits, disclaimer and AI disclosure |
-
-## Source code
-
-This repository holds the full source of the mod: the native UE4SS C++ mod, the data tables, the offline tests, the packaging and installer scripts, and the reverse-engineering scripts.
-
-| Folder | What is in it |
-|---|---|
-| `src/` | The native mod (`main.dll`), C++ on top of [RE-UE4SS](https://github.com/UE4SS-RE/RE-UE4SS) |
-| `cppbuild/` | CMake build of the DLL |
-| `data/` | Tables the DLL embeds (IDs and rules, no game text) |
-| `tools/` | Generators for the data tables, build and test helpers |
-| `tests/` | Offline tests, run by CI on every pull request |
-| `assets/` | NOLA's own art (title logo) |
-| `modwork/` | Pak build, release builder, installer, Lua side, dev tools |
-| `re/` | Ghidra scripts and the name database builder (you generate the data from your own game) |
-| `docs/` | Design notes |
-
-Building, testing and the folder setup are in [DEVELOPING.md](#nola-developing).
-
-## How to contribute
-
-NOLA is made by one person, so every bit of help counts. You don't need to know how to code to help!
-
-### 🐞 Report a bug
-[Open an issue](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/issues/new) and start the title with **[Bug]**. Please include:
-
-- **What happened**, and what you expected to happen.
-- **How to make it happen again**, step by step if you can.
-- **Who was hosting**, how many players were in, and whether you used **Steam** or **LAN / IP**.
-- Your **NOLA version** (for example v1.3.2) and your **game build** (Steam → right-click the game → Properties → Updates).
-- The **UE4SS.log** from **every player**. It's in `Stalker2\Binaries\Win64\ue4ss\` inside the game folder. Drag the file into the issue.
-- A **screenshot or short video** if it's something you can see.
-
-Check [Known issues](#nola-known-issues) first. Your bug might already be on the list.
-
-### 💡 Suggest an idea
-[Open an issue](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/issues/new) with **[Idea]** in the title: what you'd like, why it would make co-op more fun, and which other game does it well. Have a look at the [Roadmap](#nola-roadmap) first.
-
-### 🧪 Help with testing
-Most wanted: **4 and 5 player** sessions, **long sessions**, **missions further into the story**, and **other mods** next to NOLA. Tell us how it went in an issue with **[Test]** in the title, even if everything worked.
-
-### 🌍 Translations
-NOLA's texts are in English, Portuguese and Spanish. They live in `data/nola_texts.tsv`. Open an issue or a pull request with **[Translation]** in the title.
-
-### 🛠️ Code
-Fixes and features are welcome as pull requests. Read [CONTRIBUTING.md](#nola-contributing) first: it has the rules, the PR checklist and how CI checks your change.
-
-### ☕ Tip the developer
-NOLA is free and always will be. If you enjoy it and want to say thanks, you can leave a tip on [Ko-fi](https://ko-fi.com/jaumn). It is never required.
-
-## Rules
-
-- Be kind and patient, in issues, pull requests and anywhere else. No harassment, insults or hate.
-- **No game files.** Never post or commit files from the game: paks, assets, `.cfg` dumps, the exe, decompiled game code or saves.
-- **No piracy.** NOLA is for people who own the game. Issues about cracked copies are closed.
-- **No cheats in public games and no paid features.** NOLA is a free co-op mod.
-- **No personal data.** Remove your IP, Steam ID and real name from logs before you post them.
-
-## Disclaimer
-
-- S.T.A.L.K.E.R. 2: Heart of Chornobyl is the work of GSC Game World. NOLA is an unofficial, non-commercial fan project. It is not affiliated with, endorsed by or supported by GSC Game World or its publishers. All game names, art and trademarks belong to their owners.
-- This repository does not contain or redistribute the game, its files or its code. You need your own legal copy of the game.
-- NOLA is provided as it is, with no warranty. Use it at your own risk, and back up your saves.
-- **AI disclosure:** NOLA was developed with heavy help from AI coding assistants (Claude, by Anthropic) under the author's direction, including code, tests and documentation. The author set the goals, ran the game tests and decided what shipped.
-
-## Licence
-
-Copyright (C) 2026 Jaumn and NOLA contributors.
-
-NOLA is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3 or (at your option) any later version. See [LICENSE](LICENSE).
-
-Third-party parts keep their own licences: [RE-UE4SS](https://github.com/UE4SS-RE/RE-UE4SS) (MIT, including `modwork/s2coop/Mods/shared/UEHelpers`) and [PolyHook 2](https://github.com/stevemk14ebr/PolyHook_2_0) (MIT, pulled in by RE-UE4SS). Neither is copied into this repository except `UEHelpers`.
-
-[![made with universal-modder](https://raw.githubusercontent.com/rehan-remade/universal-modder/main/docs/media/made-with-dark.svg)](https://github.com/rehan-remade/universal-modder)
+<details>
+<summary>Install help, FAQ, features and settings</summary>
 
 <a id="nola-install"></a>
 
 ## Installation
 
 **You need**
-- The Steam version of S.T.A.L.K.E.R. 2: Heart of Chornobyl on Windows 10 or 11, Steam build 25382007 (with the Cost of Hope DLC). Other stores and other builds are not supported. A game update can break NOLA until it is updated.
+- The Steam version of S.T.A.L.K.E.R. 2: Heart of Chornobyl on Windows 10 or 11, Update 2.1 (Steam build 26123434). Other stores and other builds are not supported. A game update can break NOLA until it is updated.
 - Every player on the same NOLA version.
 - For Steam play: every player is a Steam friend of the host, with the Steam overlay on. For IP play: the PCs can reach each other on the same network or through a VPN.
 
@@ -502,9 +350,10 @@ For this to work, `hostcfg` must stay on (see "Don't change" below).
 
 If something breaks, please say what you were doing. Back up your saves before you try it.
 
----
+</details>
 
----
+<details>
+<summary>Changelog and roadmap</summary>
 
 <a id="nola-changelog"></a>
 
@@ -790,9 +639,154 @@ Host and join from the main menu, Steam or IP, up to 5 players, a shared world w
 - Companions that take orders.
 - Moving the A-Life around when players are far apart.
 
----
+</details>
+
+<details>
+<summary>Original project overview and credits</summary>
+
+<p align="center"><img src="assets/nola_title.png" alt="NOLA - No One Left Alone" width="720"></p>
+
+<p align="center"><b>Co-op for S.T.A.L.K.E.R. 2: Heart of Chornobyl. Walk the Zone with friends, in the same world, each with your own character.</b></p>
+
+<p align="center">
+<a href="https://www.nexusmods.com/stalker2heartofchornobyl/mods/3050">Nexus Mods</a> ·
+<a href="https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/releases/latest">Download</a> ·
+<a href="#nola-changelog">Changelog</a> ·
+<a href="https://ko-fi.com/jaumn">Support on Ko-fi</a>
+</p>
+
+<p align="center"><a href="https://ko-fi.com/jaumn"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support NOLA on Ko-fi"></a></p>
+
+> Status: **v1.3.2** (see the [Changelog](#nola-changelog)). It works and has been played a lot in testing, but it is not finished and it will have bugs. Please read [Known issues](#nola-known-issues) before you start.
 
 ---
+
+## What NOLA is
+
+NOLA is a fan-made co-op mod for S.T.A.L.K.E.R. 2: Heart of Chornobyl. One player hosts and runs the Zone. Up to five players (the host plus four friends) share that world: you see each other, fight the same enemies, loot the same bodies, follow the same story, and pick each other up when you go down.
+
+The host's world is the real one: the host decides what the A-Life, the NPCs, the weather and the quests do. Everyone else joins that world and keeps their own character (gear, condition, attachments and health). If you do not press the co-op buttons, the game plays like normal solo STALKER 2.
+
+NOLA is free and open source under the [GPL-3.0 licence](LICENSE).
+
+## At a glance
+
+- Up to **5 players**: the host plus four friends.
+- Connect through **Steam friends** or **LAN / IP** (VPN works too).
+- One shared Zone: same NPCs, enemies, loot and story, run by the host.
+- Every player keeps their **own character**.
+- Downed and revive, friendly fire, and everyone loads together with the host.
+- Solo play is unchanged when you don't press the co-op buttons.
+
+## Play
+
+Download the latest release from [Nexus Mods](https://www.nexusmods.com/stalker2heartofchornobyl/mods/3050) or [GitHub Releases](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/releases/latest), then follow [Install and play](#nola-install).
+
+| Page | What is in it |
+|---|---|
+| [Features](#nola-features) | Every feature, grouped by area, with how well it is tested |
+| [Known issues](#nola-known-issues) | What is broken or not checked yet |
+| [Changelog](#nola-changelog) | What changed in each version |
+| [Roadmap](#nola-roadmap) | What is released, what is next, what is planned for V2, and ideas |
+| [Install and play](#nola-install) | Requirements and a quick start |
+| [Settings](#nola-flags) | What each setting does and how to turn features off |
+| [FAQ](#nola-faq) | Common questions |
+| [Credits](#nola-credits) | Credits, disclaimer and AI disclosure |
+
+## Source code
+
+This repository holds the full source of the mod: the native UE4SS C++ mod, the data tables, the offline tests, the packaging and installer scripts, and the reverse-engineering scripts.
+
+| Folder | What is in it |
+|---|---|
+| `src/` | The native mod (`main.dll`), C++ on top of [RE-UE4SS](https://github.com/UE4SS-RE/RE-UE4SS) |
+| `cppbuild/` | CMake build of the DLL |
+| `data/` | Tables the DLL embeds (IDs and rules, no game text) |
+| `tools/` | Generators for the data tables, build and test helpers |
+| `tests/` | Offline tests, run by CI on every pull request |
+| `assets/` | NOLA's own art (title logo) |
+| `modwork/` | Pak build, release builder, installer, Lua side, dev tools |
+| `re/` | Ghidra scripts and the name database builder (you generate the data from your own game) |
+| `docs/` | Design notes |
+
+Building, testing and the folder setup are in [DEVELOPING.md](#nola-developing).
+
+## How to contribute
+
+NOLA is made by one person, so every bit of help counts. You don't need to know how to code to help!
+
+### 🐞 Report a bug
+[Open an issue](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/issues/new) and start the title with **[Bug]**. Please include:
+
+- **What happened**, and what you expected to happen.
+- **How to make it happen again**, step by step if you can.
+- **Who was hosting**, how many players were in, and whether you used **Steam** or **LAN / IP**.
+- Your **NOLA version** (for example v1.3.2) and your **game build** (Steam → right-click the game → Properties → Updates).
+- The **UE4SS.log** from **every player**. It's in `Stalker2\Binaries\Win64\ue4ss\` inside the game folder. Drag the file into the issue.
+- A **screenshot or short video** if it's something you can see.
+
+Check [Known issues](#nola-known-issues) first. Your bug might already be on the list.
+
+### 💡 Suggest an idea
+[Open an issue](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/issues/new) with **[Idea]** in the title: what you'd like, why it would make co-op more fun, and which other game does it well. Have a look at the [Roadmap](#nola-roadmap) first.
+
+### 🧪 Help with testing
+Most wanted: **4 and 5 player** sessions, **long sessions**, **missions further into the story**, and **other mods** next to NOLA. Tell us how it went in an issue with **[Test]** in the title, even if everything worked.
+
+### 🌍 Translations
+NOLA's texts are in English, Portuguese and Spanish. They live in `data/nola_texts.tsv`. Open an issue or a pull request with **[Translation]** in the title.
+
+### 🛠️ Code
+Fixes and features are welcome as pull requests. Read [CONTRIBUTING.md](#nola-contributing) first: it has the rules, the PR checklist and how CI checks your change.
+
+### ☕ Tip the developer
+NOLA is free and always will be. If you enjoy it and want to say thanks, you can leave a tip on [Ko-fi](https://ko-fi.com/jaumn). It is never required.
+
+## Rules
+
+- Be kind and patient, in issues, pull requests and anywhere else. No harassment, insults or hate.
+- **No game files.** Never post or commit files from the game: paks, assets, `.cfg` dumps, the exe, decompiled game code or saves.
+- **No piracy.** NOLA is for people who own the game. Issues about cracked copies are closed.
+- **No cheats in public games and no paid features.** NOLA is a free co-op mod.
+- **No personal data.** Remove your IP, Steam ID and real name from logs before you post them.
+
+## Disclaimer
+
+- S.T.A.L.K.E.R. 2: Heart of Chornobyl is the work of GSC Game World. NOLA is an unofficial, non-commercial fan project. It is not affiliated with, endorsed by or supported by GSC Game World or its publishers. All game names, art and trademarks belong to their owners.
+- This repository does not contain or redistribute the game, its files or its code. You need your own legal copy of the game.
+- NOLA is provided as it is, with no warranty. Use it at your own risk, and back up your saves.
+- **AI disclosure:** NOLA was developed with heavy help from AI coding assistants (Claude, by Anthropic) under the author's direction, including code, tests and documentation. The author set the goals, ran the game tests and decided what shipped.
+
+## Licence
+
+Copyright (C) 2026 Jaumn and NOLA contributors.
+
+NOLA is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3 or (at your option) any later version. See [LICENSE](LICENSE).
+
+Third-party parts keep their own licences: [RE-UE4SS](https://github.com/UE4SS-RE/RE-UE4SS) (MIT, including `modwork/s2coop/Mods/shared/UEHelpers`) and [PolyHook 2](https://github.com/stevemk14ebr/PolyHook_2_0) (MIT, pulled in by RE-UE4SS). Neither is copied into this repository except `UEHelpers`.
+
+[![made with universal-modder](https://raw.githubusercontent.com/rehan-remade/universal-modder/main/docs/media/made-with-dark.svg)](https://github.com/rehan-remade/universal-modder)
+
+<a id="nola-credits"></a>
+
+## Credits
+
+**Custom stability 0.5 changes:** prepared for dreadnaughtgaming with assistance from OpenAI Codex. Original NOLA authorship remains with Jaumn and the contributors listed below. This is an unofficial modified build.
+
+- **Jaumn**: creator of NOLA. Design, programming, testing and many nights in the Zone. NOLA started with one simple wish: to walk the Zone with friends instead of alone.
+- **The UE4SS team**: the mod loader that lets mods like this run inside Unreal Engine games. NOLA would not exist without it. UE4SS (UE4SS-RE project) is released under the MIT licence, and the licence file is shipped with NOLA.
+- **GSC Game World**: for creating the Zone, keeping the spirit of the series alive, and the official modding tools that help the community understand the game.
+- **Sternab**: the fix for identical items vanishing next to a picked-up item (v1.3.1).
+- **Testers and friends**: thanks to everyone who jumped into broken builds and reported every bug. Every fix exists because someone tested it first.
+- **The STALKER community**: to every modder who shared knowledge and every player who ever asked "can we play this together?". This one is for you.
+- S.T.A.L.K.E.R. 2: Heart of Chornobyl is the work of GSC Game World. NOLA is an unofficial, non-commercial fan project. It is not affiliated with, endorsed by or supported by GSC Game World or its publishers. All game names, art and trademarks belong to their owners. NOLA does not contain or redistribute the game, and you need your own copy.
+- NOLA is a free hobby and study project. It is provided as it is, with no warranty. Use it at your own risk.
+- **AI disclosure:** NOLA was developed with heavy help from AI coding assistants (Claude, by Anthropic) under the author's direction, including code, tests and documentation. The author set the goals, ran the game tests and decided what shipped.
+
+</details>
+
+<details>
+<summary>Contributing, development and technical reference</summary>
 
 <a id="nola-contributing"></a>
 
@@ -919,30 +913,6 @@ Use what you learn to write your own code. Don't commit decompiler output (see [
 
 - [docs/RELEASE.md](#nola-docs-release): what a release contains and how runtime tables are embedded.
 - [docs/STEAM_DESIGN.md](#nola-docs-steam-design): how the Steam connection works.
-
----
-
----
-
-<a id="nola-credits"></a>
-
-## Credits
-
-**Custom stability 0.5 changes:** prepared for dreadnaughtgaming with assistance from OpenAI Codex. Original NOLA authorship remains with Jaumn and the contributors listed below. This is an unofficial modified build.
-
-- **Jaumn**: creator of NOLA. Design, programming, testing and many nights in the Zone. NOLA started with one simple wish: to walk the Zone with friends instead of alone.
-- **The UE4SS team**: the mod loader that lets mods like this run inside Unreal Engine games. NOLA would not exist without it. UE4SS (UE4SS-RE project) is released under the MIT licence, and the licence file is shipped with NOLA.
-- **GSC Game World**: for creating the Zone, keeping the spirit of the series alive, and the official modding tools that help the community understand the game.
-- **Sternab**: the fix for identical items vanishing next to a picked-up item (v1.3.1).
-- **Testers and friends**: thanks to everyone who jumped into broken builds and reported every bug. Every fix exists because someone tested it first.
-- **The STALKER community**: to every modder who shared knowledge and every player who ever asked "can we play this together?". This one is for you.
-- S.T.A.L.K.E.R. 2: Heart of Chornobyl is the work of GSC Game World. NOLA is an unofficial, non-commercial fan project. It is not affiliated with, endorsed by or supported by GSC Game World or its publishers. All game names, art and trademarks belong to their owners. NOLA does not contain or redistribute the game, and you need your own copy.
-- NOLA is a free hobby and study project. It is provided as it is, with no warranty. Use it at your own risk.
-- **AI disclosure:** NOLA was developed with heavy help from AI coding assistants (Claude, by Anthropic) under the author's direction, including code, tests and documentation. The author set the goals, ran the game tests and decided what shipped.
-
----
-
----
 
 <a id="nola-data-readme-d1"></a>
 
@@ -1920,7 +1890,32 @@ Pair 1, host A and client B, same flags.txt as the release (leashown=1 tpfloor=1
 
 Offline deliberate differences to watch: the dialog view is scanned once for both cine and ft (Lua kept two copies); `leashm mudou por fora` is replaced by `flags.txt leashm a -> b`; remoteIn hasYaw is always true.
 
----
+<a id="nola-pr-template"></a>
+
+## Pull request checklist
+
+### What this changes
+
+<!-- What was broken or missing, and what happens now. Link the issue: Fixes #123 -->
+
+### How I tested it
+
+- [ ] `tools\run_tests.ps1 --all` passes (or only shows SKIP for suites I can't run)
+- [ ] I added or updated an offline test that fails without this change
+- [ ] In game (optional): host + how many clients, Steam or LAN/IP, what I checked
+
+### Checklist
+
+- [ ] One fix or feature in this PR
+- [ ] No game files, extracted game data, decompiled code, saves or binaries
+- [ ] No personal data (IPs, Steam IDs, names, paths with my user name)
+- [ ] Generated tables in `data/` regenerated if I changed their generator
+- [ ] I agree my change is released under the GPL-3.0 licence
+
+</details>
+
+<details>
+<summary>Version 1.2.0 screenshots</summary>
 
 <a id="nola-v1-2-0-readme"></a>
 
@@ -2012,26 +2007,4 @@ While a partner has a stash open, their character crouches and searches for as l
 
 A co-op death now shows the real cause of death (or the game's default text) instead of always "shot". This fix has no screenshot.
 
----
-
-<a id="nola-pr-template"></a>
-
-## Pull request checklist
-
-### What this changes
-
-<!-- What was broken or missing, and what happens now. Link the issue: Fixes #123 -->
-
-### How I tested it
-
-- [ ] `tools\run_tests.ps1 --all` passes (or only shows SKIP for suites I can't run)
-- [ ] I added or updated an offline test that fails without this change
-- [ ] In game (optional): host + how many clients, Steam or LAN/IP, what I checked
-
-### Checklist
-
-- [ ] One fix or feature in this PR
-- [ ] No game files, extracted game data, decompiled code, saves or binaries
-- [ ] No personal data (IPs, Steam IDs, names, paths with my user name)
-- [ ] Generated tables in `data/` regenerated if I changed their generator
-- [ ] I agree my change is released under the GPL-3.0 licence
+</details>
