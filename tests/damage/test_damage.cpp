@@ -919,3 +919,6 @@ int main(int argc, char** argv)
     }
     return 0;
 }
+
+// Money has its own portable regression suite and native integration build.
+namespace s2m::money { void init() {} }

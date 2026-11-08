@@ -17,6 +17,19 @@ Built for the Steam version on Windows, game Update 2.1 (Steam build `26123434`)
 ## More information
 
 <details>
+<summary>Money transfer development preview</summary>
+
+The `feature/player-money-transfer` branch adds transfers between the host and a guest. Look at the other player within about five metres, press INSERT, enter a whole amount and click Send in the Windows popup. The target is fixed when the popup opens. Both players need this preview build. Guest-to-guest transfers in larger sessions are not included yet.
+
+The sender must have sufficient coupons. Each transfer is limited to 1,000,000 coupons, and balances must remain below 16,777,216 to keep the game's floating-point wallet API exact. Repeated packets cannot grant the same transfer twice. An explicit rejection returns the sender's money after verification.
+
+The bridge directory contains `money-transactions.log`. Keep this journal. A missing acknowledgement, changed session/world/pawn, failed wallet verification or interrupted transaction blocks further sending. There is no automatic recovery for ambiguous outcomes, and save rollback can still undo wallet changes independently of the journal.
+
+Windows DLL compilation, money regression tests and existing network/damage checks passed. Portable tests passed with AddressSanitizer and UndefinedBehaviorSanitizer (leak detection disabled because the test environment uses ptrace). A two-PC in-game test of selection, popup focus, balances and save/rejoin persistence is still required. The released stability 0.5 installer does not contain this preview.
+
+</details>
+
+<details>
 <summary>Install help, FAQ, features and settings</summary>
 
 <a id="nola-install"></a>

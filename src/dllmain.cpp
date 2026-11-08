@@ -63,6 +63,7 @@ static auto lua_s2n_find(const LuaMadeSimple::Lua& lua) -> int
     return 3;
 }
 
+#include "s2m_money.h"
 extern "C" void s2m_downview_unload();
 void s2n_ai_register(RC::LuaMadeSimple::Lua& l);
 void s2n_nat_register(RC::LuaMadeSimple::Lua& l);
@@ -89,6 +90,7 @@ class NolaNative : public RC::CppUserModBase
     }
     ~NolaNative() override
     {
+        s2m::money::shutdown();
         s2m_downview_unload();
         s2r::x0_stop();
     }

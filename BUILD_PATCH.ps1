@@ -16,6 +16,8 @@ call "$vcvars" || exit /b 1
 cd /d "$repo"
 cl /nologo /utf-8 /std:c++20 /EHsc /O2 /Isrc /Fo"$out\\" /Fe"$out\test_net.exe" tests\hardening\test_net.cpp src\s2r_net.cpp ws2_32.lib || exit /b 1
 "$out\test_net.exe" || exit /b 1
+cl /nologo /utf-8 /std:c++20 /EHsc /O2 /Isrc /Fo"$out\\" /Fe"$out\test_money.exe" tests\money\test_money.cpp || exit /b 1
+"$out\test_money.exe" || exit /b 1
 cl /nologo /utf-8 /std:c++20 /EHsc /O1 /Isrc /Fo"$out\\" /Fe"$out\test_damage.exe" tests\damage\test_damage.cpp src\s2m_damage.cpp || exit /b 1
 for %%S in (tests\hardening\*.txt) do (
   "$out\test_damage.exe" data "%%S" > "$out\%%~nS.log" || exit /b 1

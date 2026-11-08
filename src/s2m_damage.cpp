@@ -2,6 +2,7 @@
 #define NOMINMAX
 #endif
 #include "s2m_damage.h"
+#include "s2m_money.h"
 #include "s2m_bodies.h"
 #include "s2m_lock.h"
 #include "s2m_text.h"
@@ -3428,4 +3429,6 @@ X0_MODULE(damage)
     x0::every(x0::Mod::damage, "relMir", x0::Rate::t1000, [] { rel_mir_tick(); });
     x0::status(x0::Mod::damage, [] { return status_line(); });
     x0::logf("NOLA dmg: modulo C++ m02 pronto (papel=%s dmgin=%s natdmg=%s)", x0::role().c_str(), x0::flag("dmgin").str().c_str(), x0::flag("natdmg").str().c_str());
+    try { s2m::money::init(); }
+    catch (...) { x0::log("NOLA money: initialization failed; transfer support unavailable."); }
 }
