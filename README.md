@@ -1,10 +1,10 @@
 <a id="nola-overview"></a>
 
-# NOLA Co-op · Stability 0.5
+# NOLA Co-op · v1.4.1 runtime baseline
 
-Play S.T.A.L.K.E.R. 2: Heart of Chornobyl with up to five players over Steam Friends or Direct IP. This unofficial fork is based on [NOLA v1.3.2 by Jaumn](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop).
+Play S.T.A.L.K.E.R. 2: Heart of Chornobyl with up to five players over Steam Friends or Direct IP. Development fork of [NOLA by Jaumn](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop).
 
-**[Download the Windows installer](https://github.com/dreadnaughtgaming/NOLA-Stalker2-Coop/releases/download/v1.3.2-stability.0.5/NOLA-stability-0.5-v1.3.2-Installer.zip)** · [Release notes and source](https://github.com/dreadnaughtgaming/NOLA-Stalker2-Coop/releases/tag/v1.3.2-stability.0.5)
+**[Download the official v1.4.1 Windows installer](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/releases/download/v1.4.1/NOLA-Auto.zip)** · [v1.4.1 release notes](https://github.com/Joaovitor404silva/NOLA-Stalker2-Coop/releases/tag/v1.4.1)
 
 ## Quick install
 
@@ -12,9 +12,31 @@ Play S.T.A.L.K.E.R. 2: Heart of Chornobyl with up to five players over Steam Fri
 2. Run `install.bat` and choose **Steam Friends** or **Direct IP**. Everyone should install the same version.
 3. Start the game. The host selects **Host co-op** and loads a save or starts a game. The others select **Join co-op**.
 
-Built for the Steam version on Windows, game Update 2.1 (Steam build `26123434`). Stability 0.5 is an experimental prerelease. The installer was tested on Windows, and live multiplayer testing is pending.
+Built for the Steam version on Windows, game Update 2.1 (Steam build `26123434`). Our runtime baseline is the official v1.4.1 package. Integration of our custom previews is pending matching upstream source.
 
 ## More information
+
+<details>
+<summary>v1.4.1 baseline comparison and source availability</summary>
+
+The official v1.4.1 runtime package is the baseline for further integration. Its installer archive was downloaded and verified against GitHub's SHA-256 digest, `c0d053592ff40463cfbee71616a575576d06f13a3d73bd47288266fee6bc312e`.
+
+Compared with our stability 0.5 installer, four payload files changed: the native mod DLL, the mod pak, flags.txt and CHECKSUMS.txt. The loader, UE4SS DLL, signatures, engine layout and conditional-install files are byte-identical.
+
+| Area | What is established |
+| --- | --- |
+| Networking | Release notes describe small-packet transmission, packet-loss recovery, use of all received updates and adaptive NPC smoothing. The package enables `netfrag=1` and `natfeedall=1`. Matching implementation sources are pending. |
+| Gameplay and interactions | Release notes credit PR #39 and describe unlimited downed time, five-second HOME rescue, medkit receipts/refunds, guest vendor recovery, door retries and menu cancellation. These overlap with our stability 0.5 changes. |
+| Diagnostics | The new DLL contains report-key and report-file messages. Release notes document Ctrl+F10 reports and session logs. |
+| Public release source | Tag `v1.4.1` points to `40e46856861ec514a57795c1cafc81e5081d8946`. Its difference from the original v1.3.2 commit consists of five documentation files. The advertised runtime implementation changes are absent from that tag. |
+| Separate beta source | Branch `beta-1.4.0` at `5e984776c897ce6b387d89e695c22a20e2ec5e5c` contains adaptations of our fixes and additional tests, but it is outside the release tag's history and lacks the advertised new networking/reporting implementation. |
+| Fork previews | Money transfer and the host-to-guest session-reset candidate remain on their respective branches. They require review and integration against matching release source. |
+
+The upstream tag is preserved on `baseline/upstream-v1.4.1`. The fork's current custom code is still the v1.3.2-derived stability code. Compiling that code cannot reproduce the official v1.4.1 runtime. Our older installer remains in this fork's release history.
+
+The `fix/rescue-avatar-duplicates` candidate addresses two body-lifetime paths in the available shared body-manager source. Large same-pawn teleports retain and hide existing player representations through the pause, and distant-body mode retains near-body references for reuse. Regression tests exercise the production control flow with mocked engine calls. Windows compilation and in-game validation are pending. The official v1.4.1 DLL contains the old teleport/drop log strings, but a report from an affected session is still needed to confirm the exact observed clone path.
+
+</details>
 
 <details>
 <summary>Install help, FAQ, features and settings</summary>
