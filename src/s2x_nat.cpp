@@ -562,6 +562,17 @@ int g_dupfix = -1;
         {
             s2n_nat_install();
             load_classes();
+            on_role(Mod::x0, [](const std::string& before, const std::string& after) {
+                if (before != "host" || after == "host") return;
+                try
+                {
+                    s2nat::host(0, 0, 0, 0, 0, 0, 0);
+                    s2nat::feed_mode(false);
+                    g_brAt = -1;
+                    log("NOLA natnpc: previous host state released before joining another session");
+                }
+                catch (...) { err("host role cleanup"); }
+            });
             own_tag(Mod::x0, "NN", [] { return host_out(); });
             own_tag_view(Mod::x0, "NNV", [](int v) { return host_view_out(v); });
             every(Mod::x0, "natCl", Rate::t100, [] { tick100(); }, ord::t100_natCl);

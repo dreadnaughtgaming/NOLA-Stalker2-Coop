@@ -3302,14 +3302,20 @@ namespace
         for (int v = 0; v < s2nmc::kViews; ++v) { H.ordV[v].clear(); H.perPrev[v].clear(); H.outV[v].clear(); H.vs[v] = s2nmc::ViewSt{}; }
     }
     auto host_stats(double now, double t0, size_t bytes) -> void;
+    auto host_reset() -> void
+    {
+        ag_update(nullptr);
+        dmg_update(nullptr, nullptr);
+        for (auto& [o, s] : H.sel) host_offa(s, s.r.get(), false);
+        H = HostSt{};
+    }
+
     auto host_api(int mode, double meA, double rx, double ry, double rz, double pupA, double tgtA) -> std::string
     {
         (void)rz;
         if (mode != 1)
         {
-            ag_update(nullptr); dmg_update(nullptr, nullptr);
-            if (!H.sel.empty()) { for (auto& [o, s] : H.sel) host_offa(s, s.r.get(), false); H.sel.clear(); H.order.clear(); }
-            for (int v = 0; v < s2nmc::kViews; ++v) { H.ordV[v].clear(); H.outV[v].clear(); }
+            host_reset();
             return std::string();
         }
         host_mode(false);

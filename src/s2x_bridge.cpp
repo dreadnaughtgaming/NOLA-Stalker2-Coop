@@ -538,6 +538,11 @@ namespace x0::in
         if (p.state == Peer::silent && !p.left) { p.left = true; p.bye = false; p.left_at = now; ++p.lefts; }
         p.local = p.left;
         p.id.clear();
+        p.live = false;
+        p.loopback = false;
+        has_first = false;
+        bye_has = false;
+        bye_sid.clear();
     }
 
     void PeerMirror::update(const Snap& sn, double now, double silent_s, double left_s, const std::string& my_nonce)
@@ -1156,10 +1161,26 @@ namespace x0
         for (auto& w : B.vw)
         {
             w.peer.on_local_end(t);
+            // Keep sequence/session counters monotonic for existing consumers.
+            const uint64_t seq = w.snap.seq;
+            w.snap = Snap{};
+            w.snap.seq = seq;
+            w.last_in_text.clear();
+            w.merged_text.clear();
+            w.has_merged = false;
+            w.pending = false;
+            w.nr = in::NetRel{};
+            w.bye_seen = 0;
             w.mb_last.clear();
+            w.rneed.clear();
+            w.new_sess = false;
         }
         B.ros = Roster{};
         B.sid.clear();
+        B.rneed.clear();
+        B.rapps.clear();
+        B.need.clear();
+        B.last_raw_x1.clear();
     }
     const Snap& remote(int view)
     {

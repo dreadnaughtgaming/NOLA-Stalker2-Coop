@@ -746,6 +746,35 @@ static void t_csave()
     check(same_ci(L"SaveGamesNOLA", L"savegamesnola") && !same_ci(L"a", L"ab"), "csave case compare");
 }
 
+static void t_session_reset()
+{
+    auto& b = bridge();
+    auto& w = b.vw[0];
+    w.snap.ok = true; w.snap.has_pos = true; w.snap.seq = 40;
+    w.snap.t = 100; w.snap.recv = now(); w.snap.x1raw = "#NN:previous-host";
+    w.snap.x1 = w.snap.x1raw;
+    w.peer.p.state = Peer::up; w.peer.p.live = true;
+    w.peer.p.sessions = 7; w.peer.p.id = "previous-host";
+    w.peer.has_first = true; w.peer.bye_has = true; w.peer.bye_sid = "new-host";
+    w.last_in_text = w.merged_text = w.mb_last = "stale";
+    w.has_merged = w.pending = w.new_sess = true;
+    w.rneed.insert("old"); w.nr.raw = "old"; w.nr.acked = true;
+    b.rneed.insert("old"); b.rapps["old"] = {"old", 0}; b.need["old"] = 0;
+    coop_session_reset();
+    check(!remote().ok && !remote().has_pos && remote().seq == 40, "session reset: old snapshot discarded, sequence preserved");
+    check(!peer().live && peer().sessions == 7 && peer().id.empty(), "session reset: peer must establish liveness again");
+    check(!w.pending && !w.has_merged && w.mb_last.empty() && w.last_in_text.empty() && w.merged_text.empty(), "session reset: no old snapshot can dispatch");
+    check(!w.peer.has_first && !w.peer.bye_has && w.peer.bye_sid.empty(), "session reset: old handshake and BYE discarded");
+    check(w.nr.raw.empty() && !w.nr.acked && w.rneed.empty() && b.rneed.empty() && b.rapps.empty() && b.need.empty(), "session reset: reliable and appearance state cleared");
+    Snap next; next.ok = true; next.has_pos = true; next.recv = 200; next.t = 1; next.sid = "new-host";
+    next.x1raw = "#H:host,v37,c1,Medium,newnonce";
+    w.peer.update(next, 200, 5, 60, "localnonce");
+    check(!w.peer.p.live && w.peer.p.sessions == 8, "new host: first snapshot starts a new handshake");
+    next.recv = 201; next.t = 2;
+    w.peer.update(next, 201, 5, 60, "localnonce");
+    check(w.peer.p.live && w.peer.p.role == "host", "new host: second snapshot establishes live sync");
+}
+
 int main(int argc, char** argv)
 {
     std::wstring dir = tmpdir();
@@ -768,6 +797,7 @@ int main(int argc, char** argv)
     t_hub_tag();
     t_views_ur();
     t_csave();
+    t_session_reset();
     tc_tables(check, L"dev");
     remove_file(dir + L"flags.txt");
     RemoveDirectoryW(dir.c_str());

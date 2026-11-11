@@ -17,6 +17,15 @@ Built for the Steam version on Windows, game Update 2.1 (Steam build `26123434`)
 ## More information
 
 <details>
+<summary>Host-to-guest NPC reset fix preview</summary>
+
+The `fix/host-to-guest-npc-reset` branch clears received snapshots, handshake/BYE state, reliable-message state and remote appearance requests between sessions. Snapshot sequence and peer session counters remain monotonic. Leaving the host role releases the native host NPC settings and discards the previous host's selection/cache before client sync begins.
+
+Regression tests exercise the production bridge reset and host-cleanup function with game calls mocked. The original bridge implementation fails the new reset test. Windows compilation and in-game confirmation are pending because the build PC was offline. Reproduce by hosting, returning to the menu, then joining another host without restarting the game. Verify NPC movement against a clean-start join. This addresses two code paths consistent with the reported freeze; the original in-game cause remains unconfirmed.
+
+</details>
+
+<details>
 <summary>Install help, FAQ, features and settings</summary>
 
 <a id="nola-install"></a>
