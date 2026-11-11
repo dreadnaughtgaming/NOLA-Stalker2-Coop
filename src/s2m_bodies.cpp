@@ -691,6 +691,12 @@ namespace
         return valid(ai) ? ai : Ref{};
     }
 
+    void hide_near_bodies(Pl& p)
+    {
+        if (body_ok(p.pup) && hide_actor(p.pup.pawn, true)) p.pup.hidden = true;
+        if (body_ok(p.tgt)) hide_actor(p.tgt.pawn, true);
+    }
+
     void drop_body(Body& B)
     {
         B.pawn.reset();
@@ -771,7 +777,15 @@ namespace
                     double dx = q.x - G.lp->first, dy = q.y - G.lp->second;
                     if (dx * dx + dy * dy > tp * tp)
                     {
-                        drop(fmt("jogador local saltou %.0f m (teleporte)", std::sqrt(dx * dx + dy * dy) / 100));
+                        // The local pawn did not change: these bodies still belong to
+                        // this world. Keep their references so the post-teleport pause
+                        // cannot orphan them and spawn duplicate remote players.
+                        for (Pl& p : s.pl)
+                        {
+                            hide_near_bodies(p);
+                            if (valid(p.far.actor)) far_hide(p.far);
+                        }
+                        LOG(fmt("NOLA corpos: jogador local saltou %.0f m (teleporte); corpos existentes escondidos e mantidos para reutilizar", std::sqrt(dx * dx + dy * dy) / 100));
                         G.since = now;
                     }
                 }
@@ -1094,16 +1108,10 @@ namespace
         if (body_ok(P))
         {
             if (!g.hasFarLook) far_capture(P.pawn);
-            if (!P.hidden) { P.hidden = true; hide_actor(P.pawn, true); }
-            P.pawn.reset();
-            P.path.reset();
-            P.state.reset();
-            P.hidden = false;
-            Body& T = s.tgt;
-            T.pawn.reset();
-            T.path.reset();
-            T.setup = false;
-            LOG("NOLA farbody: referencias do boneco e do alvo largadas (corpo escondido)");
+            bool wasHidden = P.hidden;
+            hide_near_bodies(s);
+            // Returning from far-body mode must reuse these same actors.
+            if (!wasHidden) LOG("NOLA farbody: boneco e alvo escondidos e mantidos para reutilizar");
         }
         if (!g.hasFarLook)
         {
