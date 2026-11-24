@@ -1,4 +1,5 @@
 #include "s2m_quest.h"
+#include "s2m_quest_pickup.h"
 #include "s2m_dlgview.h"
 #include "s2m_text.h"
 #include "s2x_fr.h"
@@ -4122,6 +4123,7 @@ namespace s2m_quest
         {
             QiTab* T = qiTab();
             if (!T || fl("qigive", 1) != 1) return "qigive=0";
+            if (host() && s2m_quest_pickup::native_inventory(sid)) return "host must collect the original quest pickup";
             Id pw = E->pawn();
             if (!pw) return "sem pawn";
             auto it = T->S.find(sid);
@@ -4311,6 +4313,7 @@ namespace s2m_quest
                 std::string seq, sid, n;
                 if (parse3(ent, seq, sid, n) && T.S.count(sid))
                 {
+                    if (host() && s2m_quest_pickup::native_inventory(sid)) continue;
                     int had = NV > 1 && E->pawn() ? qiCount(E->pawn(), sid) : 0;
                     qmApply(T, Q, sid, std::atoi(n.c_str()), seq, t);
                     if (NV > 1 && E->pawn() && had != std::atoi(n.c_str())) qiFwd(Q, sid, std::atoi(n.c_str()), v, "qimirror");
@@ -4411,6 +4414,7 @@ namespace s2m_quest
                 std::string seq, sid, ns;
                 if (parse3(ent, seq, sid, ns) && T.S.count(sid))
                 {
+                    if (host() && s2m_quest_pickup::native_inventory(sid)) continue;
                     int n = std::atoi(ns.c_str());
                     int had = NV > 1 && E->pawn() ? qiCount(E->pawn(), sid) : 0;
                     std::string r = qiGive(sid, n, "copia do outro jogador", true);

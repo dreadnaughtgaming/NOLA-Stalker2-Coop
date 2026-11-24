@@ -83,16 +83,17 @@ namespace
 
     bool tap_gate()
     {
-        if (x0::fi("qhostonly", 1) != 1 || !x0::coop() || !x0::is_client() || !table()) return false;
+        if (x0::fi("qhostonly", 1) != 1 || !x0::coop() || !x0::is_client()) return false;
         Ref p = x0::first_of(L"BP_Stalker2Character_C");
         if (!p) return false;
         Ref a = x0::call_o(p, L"GetInteractedActor");
         if (!a) return false;
-        const qobj::Row* r = row_of(a);
-        if (!qobj::block(true, true, r, r && s2m_solo_quest_muted(r->quest.c_str()))) return false;
+        bool hostPickup = s2m_items_host_quest_ground(a);
+        const qobj::Row* r = !hostPickup && table() ? row_of(a) : nullptr;
+        if (!hostPickup && !qobj::block(true, true, r, r && s2m_solo_quest_muted(r->quest.c_str()))) return false;
         double now = x0::now();
         bool warn = qobj::warn_due(g.gate, now, x0::fd("qhostonlygap", 3));
-        x0::logf("NOLA qhostonly: toque do cliente em %s bloqueado (missao %s)", x0::obj_name(a).c_str(), r->quest.c_str());
+        x0::logf("NOLA qhostonly: toque do cliente em %s bloqueado (missao %s)", x0::obj_name(a).c_str(), hostPickup ? "native quest pickup" : r->quest.c_str());
         if (warn) x0::ui_msg("qhostonly", nola_text::tx(nola_text::T::qhostonly_block), x0::fd("qhostonlygap", 3));
         return true;
     }

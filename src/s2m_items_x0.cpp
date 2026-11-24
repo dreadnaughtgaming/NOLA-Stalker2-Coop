@@ -8,6 +8,7 @@
 #include "s2m_damage.h"
 #include "s2m_lock.h"
 #include "s2m_quest.h"
+#include "s2m_qobj.h"
 #include "s2m_save.h"
 #include "s2n_nat_api.h"
 #include "s2m_cgc.h"
@@ -910,6 +911,11 @@ class XEnv : public Env
 XEnv g_env;
 
 bool on() { return x0::port(x0::Mod::items); }
+}
+
+bool s2m_items_host_quest_ground(const x0::Ref& actor)
+{
+    return on() && s2m_items::hostQuestGround(g_env.to_s(actor));
 }
 
 X0_MODULE(items)

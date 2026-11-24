@@ -1,0 +1,17 @@
+CMD role host
+CMD pawn 100
+CMD t 1
+CMD part QI 1,E07_PsyEmitter,1|2,E07_MQ01_SkiperPDA,1
+CMD run 1
+LOG NOLA trig: 4002 gatilhos de missao em s2u_triggers.tsv
+LOG NOLA qitem: 564 itens de missao, 465 nos ItemAdd pulados no cliente, 178 recipientes/corpos com item de missao
+STUB createItem E07_MQ01_SkiperPDA 1
+LOG NOLA qimirror: o outro jogador tem E07_MQ01_SkiperPDA x1 (seq 2); eu tinha 0 -> +1 ok=true
+OUT 
+CMD role client
+CMD t 3
+CMD part QI 3,E07_PsyEmitter,1
+CMD run 1
+STUB createItem E07_PsyEmitter 1
+LOG NOLA qimirror: o outro jogador tem E07_PsyEmitter x1 (seq 3); eu tinha 0 -> +1 ok=true
+OUT 

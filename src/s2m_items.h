@@ -184,6 +184,7 @@ namespace s2m_items
 
     const std::vector<std::string>& lootSids();
     bool isQuestItem(const std::string& sid);
+    bool hostQuestGround(Obj actor);
     bool qshareOn();
     Counts invSnap(Obj pawn, long long* money = nullptr);
     bool itemRemove(const std::string& kind, const std::string& a, const std::string& b, const std::string& c);

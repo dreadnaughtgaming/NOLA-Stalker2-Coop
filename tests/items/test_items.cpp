@@ -527,7 +527,7 @@ class Fake : public Env
         std::string l;
         while (std::getline(f, l))
         {
-            if (!l.empty() && l.back() == '') l.pop_back();
+            if (!l.empty() && l.back() == '\r') l.pop_back();
             size_t a = l.find('	');
             if (a == std::string::npos) continue;
             size_t b = l.find('	', a + 1);
@@ -1514,6 +1514,43 @@ class GroundWorld : public Fake
     void step(double at) { t = at; tick100(); }
 };
 
+int questGroundPickup()
+{
+    int before = fails;
+    for (const char* take : {
+        "405569,547157,502;BP_StaticItemContainer_C;SM_mar",
+        "492067,512052,1128;BP_StaticItemContainer_C;SM_que_emitter_01"})
+    {
+        std::string key = take;
+        double x, y, z;
+        std::sscanf(take, "%lf,%lf,%lf", &x, &y, &z);
+        std::string mesh = key.substr(key.rfind(';') + 1);
+        GroundWorld w;
+        int item = w.item(x, mesh, "BP_StaticItemContainer_C");
+        w.acts[item].pos = {x + 1, y, z};
+        int other = w.item(x + 100, mesh, "BP_StaticItemContainer_C");
+        w.acts[other].pos = {x + 100, y, z};
+        check(hostQuestGround(w.objOf(item)), "quest ground: original can be recognized by the guest interaction gate");
+        check(!hostQuestGround(w.objOf(other)), "quest ground: identical mesh elsewhere is normal loot");
+        w.parts["G"] = "1;" + key;
+        w.step(1);
+        check(!w.acts[item].hid && w.files["taken.txt"].find(key) == std::string::npos,
+              "quest ground: guest pickup cannot hide or record the original on the host");
+        w.parts.clear();
+        reset();
+        w.files["taken.txt"] = "item@" + key + "\n";
+        w.step(7);
+        check(!w.acts[item].hid, "quest ground: old taken key cannot hide a streamed host original");
+        reset();
+        w.isHost = false;
+        w.parts["G"] = "2;" + key;
+        w.step(8);
+        check(w.acts[item].hid && !w.acts[other].hid, "quest ground: clients still follow a host pickup");
+    }
+    std::printf("quest ground pickups: %s\n", fails > before ? "FAIL" : "ok");
+    return fails - before;
+}
+
 int groundIdentity()
 {
     int before = fails;
@@ -1801,5 +1838,6 @@ int main(int argc, char** argv)
     int u = unit();
     int r = roleSwitch();
     int g = groundIdentity();
-    return u || r || g ? 1 : 0;
+    int q = questGroundPickup();
+    return u || r || g || q ? 1 : 0;
 }

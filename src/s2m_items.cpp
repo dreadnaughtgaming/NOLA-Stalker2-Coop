@@ -1,4 +1,5 @@
 #include "s2m_items.h"
+#include "s2m_quest_pickup.h"
 #if !defined(S2X_RELEASE) && defined(S2X_DEVCMD)
 #include "s2m_census_logic.h"
 #endif
@@ -2170,6 +2171,11 @@ namespace s2m_items
                 if (sc == std::string::npos || !allOf(ent.substr(0, sc), isD)) continue;
                 std::string xyz[3], cls, mesh;
                 if (!gParse(ent.substr(sc + 1), xyz, cls, mesh)) continue;
+                if (HOST() && s2m_quest_pickup::host_ground(numOr(xyz[0], 0), numOr(xyz[1], 0), numOr(xyz[2], 0), cls, mesh))
+                {
+                    LOG("NOLA ground: quest pickup kept for the host's native interaction: " + ent);
+                    continue;
+                }
                 if (MC() && HOST())
                 {
                     if (!mcGOwnTake(gi.pid, numOr(xyz[0], 0), numOr(xyz[1], 0), numOr(xyz[2], 0), cls, mesh, ent)) continue;
@@ -2224,6 +2230,8 @@ namespace s2m_items
                     if (!startsWith(k, "item@")) continue;
                     std::string xyz[3], cls, mesh;
                     if (!gParse(k.substr(5), xyz, cls, mesh)) continue;
+                    // Older guest pickups may already have left a saved taken key.
+                    if (HOST() && s2m_quest_pickup::host_ground(numOr(xyz[0], 0), numOr(xyz[1], 0), numOr(xyz[2], 0), cls, mesh)) continue;
                     GMatch m = gFind(numOr(xyz[0], 0), numOr(xyz[1], 0), numOr(xyz[2], 0), cls, mesh);
                     if (!m.local.empty())
                     {
@@ -6513,6 +6521,14 @@ namespace s2m_items
         return g_env ? sids() : none;
     }
     bool isQuestItem(const std::string& sid) { return g_env && qs(sid); }
+    bool hostQuestGround(Obj actor)
+    {
+        if (!g_env || !VAL(actor)) return false;
+        std::string cls = firstTok(E().full(actor));
+        if (cls != "BP_StaticItemContainer_C") return false;
+        V3 p;
+        return E().loc(actor, p) && s2m_quest_pickup::host_ground(p.x, p.y, p.z, cls, meshOf(actor));
+    }
     bool qshareOn() { return g_env && FON("qshare") && qtOk(); }
     Counts invSnap(Obj pawn, long long* money)
     {

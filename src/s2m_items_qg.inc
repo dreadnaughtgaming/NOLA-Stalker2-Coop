@@ -111,6 +111,7 @@
             std::string kind, src, sid, who;
             long long n = 0, tot = 0;
             if (!qgParse(k, kind, src, sid, n, tot, who) || kind != "qc") return;
+            if (pid != 0 && s2m_quest_pickup::native_inventory(sid)) return;
             Qg& Q = S().qg;
             if (!Q.loaded) qgLoad();
             if (!S().tk.loaded) takenLoad();
@@ -177,6 +178,7 @@
                 std::string kind, src, sid, who;
                 long long n = 0, tot = 0;
                 if (!qgParse(k, kind, src, sid, n, tot, who)) continue;
+                if (HOST() && s2m_quest_pickup::native_inventory(sid)) continue;
                 std::string lk = src + ";" + sid;
                 if (Q.mine.count("c|" + lk) || Q.mine.count("o|" + k))
                 {

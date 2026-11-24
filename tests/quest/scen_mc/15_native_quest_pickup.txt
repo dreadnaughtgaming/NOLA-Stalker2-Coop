@@ -1,0 +1,13 @@
+# The host must collect the original Emitter, even if a guest sends its count.
+role host
+flag lead 1
+flag qimirror 1
+flag qisec 0.5
+pawn 100
+t 1
+part QI 1,E07_PsyEmitter,1|2,E07_MQ01_SkiperPDA,1
+run 1
+role client
+t 3
+part QI 3,E07_PsyEmitter,1
+run 1
